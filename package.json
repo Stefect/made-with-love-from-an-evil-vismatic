@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder --win pack"
+    "build": "electron-builder --win"
   },
   "build": {
     "appId": "com.mathblitz.app",
