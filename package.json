@@ -1,0 +1,21 @@
+{
+  "name": "math-blitz",
+  "version": "1.0.0",
+  "description": "Математичний бліц-тренажер",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win pack"
+  },
+  "build": {
+    "appId": "com.mathblitz.app",
+    "win": {
+      "target": "portable"
+    }
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.0"
+  }
+}

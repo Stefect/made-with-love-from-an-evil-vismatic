@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Математичний Бліц</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      transition: background-color 0.2s;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 320px;
+    }
+    h2 { margin-top: 0; color: #333; }
+    .question { font-size: 24px; font-weight: bold; margin: 20px 0; color: #007bff; }
+    input {
+      width: 80%;
+      padding: 10px;
+      font-size: 18px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      text-align: center;
+      outline: none;
+    }
+    input:focus { border-color: #007bff; }
+    .score { margin-top: 20px; font-size: 14px; color: #666; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>Математичний Бліц</h2>
+    <div class="question" id="question">Завантаження...</div>
+    <input type="number" id="answer" placeholder="Твоя відповідь" autofocus />
+    <div class="score" id="score">Рахунок: 0 / 0</div>
+  </div>
+
+  <script>
+    let num1, num2, currentOp, correctValue;
+    let score = 0;
+    let total = 0;
+
+    const questionEl = document.getElementById('question');
+    const answerInput = document.getElementById('answer');
+    const scoreEl = document.getElementById('score');
+
+    function generateQuestion() {
+      const ops = ['+', '-', '*', '/'];
+      currentOp = ops[Math.floor(Math.random() * ops.length)];
+
+      if (currentOp === '/') {
+        num2 = Math.floor(Math.random() * 9) + 1;       // 1–9
+        correctValue = Math.floor(Math.random() * 10) + 1; // 1–10
+        num1 = num2 * correctValue;
+      } else if (currentOp === '*') {
+        num1 = Math.floor(Math.random() * 10) + 1;
+        num2 = Math.floor(Math.random() * 10) + 1;
+        correctValue = num1 * num2;
+      } else {
+        num1 = Math.floor(Math.random() * 50) + 1;
+        num2 = Math.floor(Math.random() * 50) + 1;
+        correctValue = currentOp === '+' ? num1 + num2 : num1 - num2;
+      }
+
+      questionEl.textContent = `${num1} ${currentOp} ${num2} = ?`;
+      answerInput.value = '';
+      answerInput.focus();
+    }
+
+    answerInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const userAns = parseInt(answerInput.value, 10);
+        if (isNaN(userAns)) return;
+
+        if (userAns === correctValue) {
+          score++;
+          document.body.style.backgroundColor = '#d4edda'; // зелений спалах
+        } else {
+          document.body.style.backgroundColor = '#f8d7da'; // червоний спалах
+        }
+
+        total++;
+        scoreEl.textContent = `Рахунок: ${score} / ${total}`;
+
+        setTimeout(() => {
+          document.body.style.backgroundColor = '#f0f2f5';
+        }, 300);
+
+        generateQuestion();
+      }
+    });
+
+    generateQuestion();
+  </script>
+</body>
+</html>
